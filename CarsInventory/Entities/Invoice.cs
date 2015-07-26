@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -26,6 +27,9 @@ namespace CarsInventory.Entities
         public double Price { get; set; }
 
         public int NumberOfDays { get; set; }
+
+        [ForeignKey("VehicleId")]
+        public Vehicle Vehicle { get; set; }
 
 
 

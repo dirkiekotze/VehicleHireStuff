@@ -199,6 +199,10 @@
     <Compile Include="DataContext\InventoryMigrations\201507250543281_Add Inventory Change NumberOFDays.Designer.cs">
       <DependentUpon>201507250543281_Add Inventory Change NumberOFDays.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContext\InventoryMigrations\201507261224083_Add Foreign Key VehicleID to Invoice.cs" />
+    <Compile Include="DataContext\InventoryMigrations\201507261224083_Add Foreign Key VehicleID to Invoice.Designer.cs">
+      <DependentUpon>201507261224083_Add Foreign Key VehicleID to Invoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContext\InventoryMigrations\Configuration.cs" />
     <Compile Include="Entities\Destination.cs" />
     <Compile Include="Entities\FuelType.cs" />
@@ -342,6 +346,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContext\InventoryMigrations\201507250543281_Add Inventory Change NumberOFDays.resx">
       <DependentUpon>201507250543281_Add Inventory Change NumberOFDays.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContext\InventoryMigrations\201507261224083_Add Foreign Key VehicleID to Invoice.resx">
+      <DependentUpon>201507261224083_Add Foreign Key VehicleID to Invoice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

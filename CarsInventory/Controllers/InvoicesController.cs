@@ -36,7 +36,7 @@ namespace CarsInventory.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = _content.Invoice.Find(id);
+            var invoice = _content.Invoice.Find(id);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -47,6 +47,8 @@ namespace CarsInventory.Controllers
         // GET: Invoices/Create
         public ActionResult Create()
         {
+            ViewBag.Vehicles = new SelectList(_content.Vehicles.OrderBy(v => v.Description),"Id","Description");
+            
             return View();
         }
 
@@ -70,6 +72,12 @@ namespace CarsInventory.Controllers
         // GET: Invoices/Edit/5
         public ActionResult Edit(int? id)
         {
+
+            var xx = _content.Invoice.SingleOrDefault(v => v.Vehicle.Id.Equals(3));
+
+
+            ViewBag.Vehicles = new SelectList(_content.Vehicles.OrderBy(v => v.Description), "Id", "Description");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
