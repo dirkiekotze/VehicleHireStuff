@@ -45,6 +45,7 @@ namespace CarsInventory
                     scan.TheCallingAssembly();
                     scan.WithDefaultConventions();
                 });
+
             });
 
         }

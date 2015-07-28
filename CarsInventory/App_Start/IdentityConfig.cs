@@ -12,6 +12,7 @@ namespace CarsInventory
 
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
+        private ApplicationUserManager _userManager;
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {

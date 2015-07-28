@@ -26,8 +26,7 @@ namespace CarsInventory.Infastructure
 
             var container = _containerFactory();
 
-            return serviceType.IsAbstract || serviceType.IsInterface
-                ? container.TryGetInstance(serviceType) : container.GetInstance(serviceType);
+            return serviceType.IsAbstract || serviceType.IsInterface ? container.TryGetInstance(serviceType) : container.GetInstance(serviceType);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)

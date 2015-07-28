@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using CarsInventory.Models;
+using StructureMap;
 
 namespace CarsInventory.Controllers
 {
@@ -18,7 +19,9 @@ namespace CarsInventory.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
+        
 
+        [DefaultConstructor]
         public AccountController()
         {
         }
