@@ -163,6 +163,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SeedData.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -203,16 +204,37 @@
     <Compile Include="DataContext\InventoryMigrations\201507261224083_Add Foreign Key VehicleID to Invoice.Designer.cs">
       <DependentUpon>201507261224083_Add Foreign Key VehicleID to Invoice.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContext\InventoryMigrations\201507290245008_AddLogAction Tbl.cs" />
+    <Compile Include="DataContext\InventoryMigrations\201507290245008_AddLogAction Tbl.Designer.cs">
+      <DependentUpon>201507290245008_AddLogAction Tbl.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContext\InventoryMigrations\Configuration.cs" />
     <Compile Include="Entities\Destination.cs" />
     <Compile Include="Entities\FuelType.cs" />
     <Compile Include="Entities\Invoice.cs" />
+    <Compile Include="Entities\LogAction.cs" />
     <Compile Include="Entities\Seat.cs" />
     <Compile Include="Entities\Vehicle.cs" />
+    <Compile Include="Filters\LogAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infastructure\ActionFilterRegistry.cs" />
+    <Compile Include="Infastructure\ControllerConvention.cs" />
+    <Compile Include="Infastructure\ControllerRegistry.cs" />
+    <Compile Include="Infastructure\CurrentUser.cs" />
+    <Compile Include="Infastructure\ICurrentUser.cs" />
+    <Compile Include="Infastructure\MvcRegistry.cs" />
+    <Compile Include="Infastructure\StandardRegistry.cs" />
     <Compile Include="Infastructure\StructureMapDependencyResolver.cs" />
+    <Compile Include="Infastructure\StructureMapFilterProvider.cs" />
+    <Compile Include="Infastructure\Tasks\IRunAfterEachRequest.cs" />
+    <Compile Include="Infastructure\Tasks\IRunOnEachRequest.cs" />
+    <Compile Include="Infastructure\Tasks\IRunOnError.cs" />
+    <Compile Include="Infastructure\Tasks\IRunAtInit.cs" />
+    <Compile Include="Infastructure\Tasks\IRunAtStartup.cs" />
+    <Compile Include="Infastructure\Tasks\TaskRegistry.cs" />
+    <Compile Include="Infastructure\TransactionPerRequest.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -349,6 +371,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContext\InventoryMigrations\201507261224083_Add Foreign Key VehicleID to Invoice.resx">
       <DependentUpon>201507261224083_Add Foreign Key VehicleID to Invoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContext\InventoryMigrations\201507290245008_AddLogAction Tbl.resx">
+      <DependentUpon>201507290245008_AddLogAction Tbl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

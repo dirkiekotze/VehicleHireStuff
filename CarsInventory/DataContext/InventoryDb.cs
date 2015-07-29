@@ -19,5 +19,7 @@ namespace CarsInventory.DataContext
         public DbSet<Vehicle> Vehicles { get; set; }
 
         public DbSet<Invoice> Invoice { get; set; }
+
+        public DbSet <LogAction> LogAction { get; set; }
     }
 }

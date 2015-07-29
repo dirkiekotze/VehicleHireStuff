@@ -82,7 +82,7 @@ namespace CarsInventory.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = _content.Invoice.Find(id);
+            var invoice = _content.Invoice.Find(id);
             if (invoice == null)
             {
                 return HttpNotFound();

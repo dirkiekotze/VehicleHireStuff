@@ -8,13 +8,27 @@ using System.Web;
 using System.Web.Mvc;
 using CarsInventory.DataContext;
 using CarsInventory.Entities;
+using CarsInventory.Infastructure;
+using Microsoft.AspNet.Identity;
 
 namespace CarsInventory.Controllers
 {
     [Authorize]
     public class VehiclesController : Controller
     {
-        private InventoryDb db = new InventoryDb();
+        private readonly InventoryDb db = new InventoryDb();
+        private readonly IdentityDb _identityDb;
+        private InventoryDb _db;
+        private ICurrentUser _user;
+
+
+        public VehiclesController(InventoryDb db, ICurrentUser user)
+        {
+            _db = db;
+            _user = user;
+        }
+
+
 
         // GET: Vehicles
         public ActionResult Index()
@@ -52,7 +66,9 @@ namespace CarsInventory.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Identity.GetUserId();
                 db.Vehicles.Add(vehicle);
+                db.LogAction.Add(new LogAction(_user.User.UserName, "Create", "Vhicle", "Created Vehicle"));
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
