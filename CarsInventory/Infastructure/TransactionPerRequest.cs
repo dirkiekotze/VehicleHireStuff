@@ -22,7 +22,7 @@ namespace CarsInventory.Infastructure
         void IRunOnEachRequest.Execute()
         {
             _httpContext.Items["_Transaction"] =
-                _dbContext.Database.BeginTransaction((System.Data.IsolationLevel..ReadCommitted));
+                _dbContext.Database.BeginTransaction((System.Data.IsolationLevel.ReadCommitted));
         }
 
         void IRunOnError.Execute()

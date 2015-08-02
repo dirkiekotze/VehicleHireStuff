@@ -19,14 +19,16 @@ namespace CarsInventory.Controllers
         public InvoicesController(InventoryDb content)
         {
             _content = content;
-            
+
         }
-        
+
 
         // GET: Invoices
         public ActionResult Index()
         {
-            return View(_content .Invoice.ToList());
+
+            var lst = _content.Invoice.ToList();
+            return View(_content.Invoice.ToList());
         }
 
         // GET: Invoices/Details/5
@@ -47,8 +49,8 @@ namespace CarsInventory.Controllers
         // GET: Invoices/Create
         public ActionResult Create()
         {
-            ViewBag.Vehicles = new SelectList(_content.Vehicles.OrderBy(v => v.Description),"Id","Description");
-            
+            ViewBag.Vehicles = new SelectList(_content.Vehicles.OrderBy(v => v.Description), "Id", "Description");
+
             return View();
         }
 
@@ -74,7 +76,6 @@ namespace CarsInventory.Controllers
         {
 
             var xx = _content.Invoice.SingleOrDefault(v => v.Vehicle.Id.Equals(3));
-
 
             ViewBag.Vehicles = new SelectList(_content.Vehicles.OrderBy(v => v.Description), "Id", "Description");
 
@@ -132,13 +133,6 @@ namespace CarsInventory.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _content.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
     }
 }

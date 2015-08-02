@@ -8,6 +8,7 @@ using CarsInventory.DataContext;
 
 namespace CarsInventory.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private IdentityDb _content;
