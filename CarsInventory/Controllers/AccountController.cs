@@ -12,6 +12,7 @@ using Microsoft.Owin.Security;
 using Owin;
 using CarsInventory.Models;
 using StructureMap;
+using Microsoft.Web.Mvc;
 
 namespace CarsInventory.Controllers
 {
@@ -105,7 +106,7 @@ namespace CarsInventory.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return this.RedirectToAction<HomeController>(c => c.Index());
                 }
                 else
                 {
@@ -213,7 +214,7 @@ namespace CarsInventory.Controllers
                 IdentityResult result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ResetPasswordConfirmation", "Account");
+                    return this.RedirectToAction<AccountController>(c => c.ResetPasswordConfirmation());
                 }
                 else
                 {
@@ -241,7 +242,7 @@ namespace CarsInventory.Controllers
         public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)
         {
             ManageMessageId? message = null;
-            IdentityResult result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
+            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -252,7 +253,10 @@ namespace CarsInventory.Controllers
             {
                 message = ManageMessageId.Error;
             }
-            return RedirectToAction("Manage", new { Message = message });
+            //return RedirectToAction("Manage", new { Message = message });
+            
+            message = new ManageMessageId();
+            return this.RedirectToAction<AccountController>(c => c.Manage(message));
         }
 
         //
@@ -288,7 +292,8 @@ namespace CarsInventory.Controllers
                     {
                         var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                         await SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        //return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        return this.RedirectToAction<AccountController>(c => c.Manage(ManageMessageId.ChangePasswordSuccess));
                     }
                     else
                     {
@@ -310,7 +315,9 @@ namespace CarsInventory.Controllers
                     IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                        //return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                        return
+                            this.RedirectToAction<AccountController>(c => c.Manage(ManageMessageId.SetPasswordSuccess));
                     }
                     else
                     {
@@ -378,9 +385,10 @@ namespace CarsInventory.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
             {
-                return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+                //return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+                return this.RedirectToAction<AccountController>(c => c.Manage(ManageMessageId.Error));
             }
-            IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             if (result.Succeeded)
             {
                 return RedirectToAction("Manage");
@@ -440,7 +448,8 @@ namespace CarsInventory.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
+            return this.RedirectToAction<HomeController>(c => c.Index());
         }
 
         //

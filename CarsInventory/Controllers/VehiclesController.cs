@@ -9,7 +9,9 @@ using System.Web.Mvc;
 using CarsInventory.DataContext;
 using CarsInventory.Entities;
 using CarsInventory.Infastructure;
+using CarsInventory.Infastructure.Alerts;
 using Microsoft.AspNet.Identity;
+using Microsoft.Web.Mvc;
 
 namespace CarsInventory.Controllers
 {
@@ -17,9 +19,8 @@ namespace CarsInventory.Controllers
     public class VehiclesController : Controller
     {
         private readonly InventoryDb db = new InventoryDb();
-        private readonly IdentityDb _identityDb;
         private InventoryDb _db;
-        private ICurrentUser _user;
+        private readonly ICurrentUser _user;
 
 
         public VehiclesController(InventoryDb db, ICurrentUser user)
@@ -70,7 +71,7 @@ namespace CarsInventory.Controllers
                 db.Vehicles.Add(vehicle);
                 db.LogAction.Add(new LogAction(_user.User.UserName, "Create", "Vhicle", "Created Vehicle"));
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return this.RedirectToAction<VehiclesController>(c => c.Index()).WithSuccess("Vehicle Created");
             }
 
             return View(vehicle);
@@ -103,7 +104,7 @@ namespace CarsInventory.Controllers
             {
                 db.Entry(vehicle).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return this.RedirectToAction<VehiclesController>(c => c.Index()).WithSuccess("Edit Vehicle");
             }
             return View(vehicle);
         }
@@ -118,7 +119,7 @@ namespace CarsInventory.Controllers
             Vehicle vehicle = db.Vehicles.Find(id);
             if (vehicle == null)
             {
-                return HttpNotFound();
+                this.RedirectToAction<VehiclesController>(c => c.Index()).WithError("Vehicle was not Found");
             }
             return View(vehicle);
         }
@@ -128,10 +129,16 @@ namespace CarsInventory.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Vehicle vehicle = db.Vehicles.Find(id);
+            var vehicle = db.Vehicles.Find(id);
+
+            if (vehicle == null)
+            {
+                return this.RedirectToAction<VehiclesController>(c => c.Index()).WithError("Vehicle was not Found");
+            }
+
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return this.RedirectToAction<VehiclesController>(c => c.Index()).WithSuccess("Deleted Vehicle."); 
         }
 
         //protected override void Dispose(bool disposing)

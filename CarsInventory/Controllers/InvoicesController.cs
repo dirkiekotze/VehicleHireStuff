@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Web.Mvc;
 using CarsInventory.DataContext;
 using CarsInventory.Entities;
 
@@ -29,6 +30,8 @@ namespace CarsInventory.Controllers
 
             var lst = _content.Invoice.ToList();
             return View(_content.Invoice.ToList());
+
+            //return this.RedirectToAction<HomeController>(c => c.Index());
         }
 
         // GET: Invoices/Details/5
@@ -102,7 +105,7 @@ namespace CarsInventory.Controllers
             {
                 _content.Entry(invoice).State = EntityState.Modified;
                 _content.SaveChanges();
-                return RedirectToAction("Index");
+                return this.RedirectToAction<InvoicesController>(c => c.Index());
             }
             return View(invoice);
         }
@@ -130,7 +133,7 @@ namespace CarsInventory.Controllers
             Invoice invoice = _content.Invoice.Find(id);
             _content.Invoice.Remove(invoice);
             _content.SaveChanges();
-            return RedirectToAction("Index");
+            return this.RedirectToAction<InvoicesController>(c => c.Index());
         }
 
 
